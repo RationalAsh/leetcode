@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 type Link = Option<Box<ListNode>>;
 
 // Definition for singly-linked list.
