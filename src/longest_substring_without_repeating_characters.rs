@@ -45,11 +45,6 @@ fn length_of_longest_substring(s: String) -> i32 {
 mod tests {
     use super::length_of_longest_substring;
 
-    #[test]
-    // fn test_duplicates() {
-    //     assert!(contains_duplicates("ss".as_bytes()))
-    // }
-
     // ─────────────────────────────
     // 0-length & 1-length inputs
     // ─────────────────────────────
