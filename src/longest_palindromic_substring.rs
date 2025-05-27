@@ -1,4 +1,4 @@
-use std::cmp::{max, min};
+use std::cmp::{Ordering, max, min};
 use std::collections::HashMap;
 
 pub struct Solution {}
@@ -28,7 +28,16 @@ fn longest_palindromic_substring(s: String) -> String {
             .iter()
             .fold((0 as usize, 1 as usize), |(l, r), (_ch, locs)| {
                 if locs.len() > 1 {
-                    let ranges = get_ranges(locs);
+                    let mut ranges = get_ranges(locs);
+                    ranges.sort_by(|&r1, &r2| {
+                        if r1.1 - r1.0 > r2.1 - r2.0 {
+                            Ordering::Greater
+                        } else if r1.1 - r1.0 < r2.1 - r2.0 {
+                            Ordering::Less
+                        } else {
+                            Ordering::Equal
+                        }
+                    });
 
                     ranges
                         .iter()
