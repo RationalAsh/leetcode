@@ -14,7 +14,7 @@ fn longest_palindromic_substring(s: String) -> String {
     // iteration / working
     let mut charmap: HashMap<char, Vec<usize>> = HashMap::new();
 
-    // Insert locations into map.
+    // Insert locations of each unique character into a hahsmap.
     s.chars().enumerate().fold(&mut charmap, |map, (idx, ch)| {
         let entry = map.entry(ch).or_insert(Vec::new());
         entry.push(idx);
@@ -23,19 +23,53 @@ fn longest_palindromic_substring(s: String) -> String {
     });
 
     // Find the relevant min idx and max idx.
-    let (min_idx, max_idx) = charmap
-        .iter()
-        .fold((0 as usize, s.len()), |(l, r), (_ch, locs)| {
-            if locs.len() > 1 {
-                let min_entry = locs.iter().min_by_key(|&&v| v).unwrap();
-                let max_entry = locs.iter().max_by_key(|&&v| v).unwrap();
+    let (min_idx, max_idx) =
+        charmap
+            .iter()
+            .fold((0 as usize, 1 as usize), |(l, r), (_ch, locs)| {
+                if locs.len() > 1 {
+                    let ranges = get_ranges(locs);
 
-                (min(l, *min_entry), max(r, *max_entry))
-            } else {
-                (l, r)
+                    ranges
+                        .iter()
+                        .fold((l, r), |(ml, mr), (_range_s, _range_e)| {
+                            if is_palindrom(&s, (_range_s, _range_e)) {
+                                if (mr - ml) < (*_range_e - *_range_s) {
+                                    (*_range_s, *_range_e)
+                                } else {
+                                    (ml, mr)
+                                }
+                            } else {
+                                (ml, mr)
+                            }
+                        })
+                } else {
+                    (l, r)
+                }
+            });
+
+    todo!()
+}
+
+fn get_ranges(locs: &Vec<usize>) -> Vec<(usize, usize)> {
+    // We iterate over the indixes
+    locs.iter()
+        .enumerate()
+        .fold(Vec::new(), |mut ranges, (idx, &loc)| {
+            let _ranges = locs[idx..(locs.len() - 1)]
+                .iter()
+                .fold(Vec::new(), |mut v, &l| {
+                    v.push((loc, l));
+                    v
+                });
+            for r in _ranges {
+                ranges.push(r);
             }
-        });
+            ranges
+        })
+}
 
+fn is_palindrom(s: &String, range: (&usize, &usize)) -> bool {
     todo!()
 }
 
