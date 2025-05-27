@@ -64,7 +64,10 @@ mod tests {
     fn case_sensitive_characters() {
         // Containment is case-sensitive: 'A' ≠ 'a'.
         let words = vs(&["Apple", "banana", "Apricot"]);
-        assert_eq!(Solution::find_words_containing(words, 'A'), vec![0, 2]);
+        assert_eq!(
+            Solution::find_words_containing(words.clone(), 'A'),
+            vec![0, 2]
+        );
         assert_eq!(Solution::find_words_containing(words, 'a'), vec![1]);
     }
 }
