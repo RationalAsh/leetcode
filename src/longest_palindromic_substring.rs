@@ -42,7 +42,7 @@ fn longest_palindromic_substring(s: String) -> String {
                     ranges
                         .iter()
                         .fold((l, r), |(ml, mr), (_range_s, _range_e)| {
-                            if is_palindrom(&s, (_range_s, _range_e)) {
+                            if is_palindrome(&s, (_range_s, _range_e)) {
                                 if (mr - ml) < (*_range_e - *_range_s) {
                                     (*_range_s, *_range_e)
                                 } else {
@@ -78,7 +78,11 @@ fn get_ranges(locs: &Vec<usize>) -> Vec<(usize, usize)> {
         })
 }
 
-fn is_palindrom(s: &String, range: (&usize, &usize)) -> bool {
+fn is_palindrome(s: &String, range: (&usize, &usize)) -> bool {
+    let s = s.as_bytes();
+
+    if s[]
+
     todo!()
 }
 
